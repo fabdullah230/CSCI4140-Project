@@ -55,11 +55,6 @@
         android:layout_marginTop="16dp" />
 
 
-
-
-
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/transactionsRecyclerView"
         android:layout_width="0dp"

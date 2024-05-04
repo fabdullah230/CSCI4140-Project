@@ -34,7 +34,9 @@ public class CalibrationPageActivity  extends AppCompatActivity {
         transactionsRecyclerView = findViewById(R.id.transactionsRecyclerView);
         transactionsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        // Initialize and attach the adapter to the RecyclerView
         adapter = new TransactionAdapter(new ArrayList<>(), this);
+        transactionsRecyclerView.setAdapter(adapter);
 
         calibrateDatabase = AppCalibrateDatabase.getDatabase(this);
         transactionDao = calibrateDatabase.transactionDao();
@@ -49,6 +51,8 @@ public class CalibrationPageActivity  extends AppCompatActivity {
             message.setVisibility(View.VISIBLE);
             calibrateModeSwitch.setChecked(false);
         }
+
+        fetchCalibrateTransactions();
 
         calibrateModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -82,19 +86,11 @@ public class CalibrationPageActivity  extends AppCompatActivity {
                 customToast.setDuration(Toast.LENGTH_SHORT);
                 customToast.setView(toastView);
                 customToast.show();
-
             }
         });
-
-        fetchCalibrateTransactions();
-
-
-
     }
 
     private void fetchCalibrateTransactions() {
-        //```java
-        // Placeholder for fetching data from an API
         new Thread(() -> {
             // Simulate network delay
             List<Transaction> transactions = new ArrayList<>();
@@ -108,8 +104,4 @@ public class CalibrationPageActivity  extends AppCompatActivity {
             runOnUiThread(() -> adapter.updateTransactions(finalTransactions));
         }).start();
     }
-
-
-
-
 }
