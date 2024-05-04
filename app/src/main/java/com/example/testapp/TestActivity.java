@@ -37,6 +37,12 @@ public class TestActivity extends AppCompatActivity {
     private long selectedTime = 0;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        fetchTransactionsWithSourceAndTimeBeforeAfter();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);

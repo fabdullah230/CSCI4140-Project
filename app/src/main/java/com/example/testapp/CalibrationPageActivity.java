@@ -90,6 +90,12 @@ public class CalibrationPageActivity  extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fetchCalibrateTransactions();
+    }
+
     private void fetchCalibrateTransactions() {
         new Thread(() -> {
             // Simulate network delay

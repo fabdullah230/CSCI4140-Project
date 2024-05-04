@@ -67,6 +67,8 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
 
+
+
     private class LoadSources extends AsyncTask<Void, Void, List<String>> {
         @Override
         protected List<String> doInBackground(Void... voids) {
