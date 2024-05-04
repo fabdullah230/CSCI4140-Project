@@ -52,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
     private static final String NOTIFICATION_LISTENER_PERMISSION = "android.permission.BIND_NOTIFICATION_LISTENER_SERVICE";
     private AppDatabase database;
     private TransactionDao transactionDao;
+
+    private AppCalibrateDatabase calibrateDatabase;
+    private TransactionDao transactionCalibrateDao;
     private BroadcastReceiver transactionReceiver;
 
     private void requestNotificationListenerPermission() {
@@ -122,7 +125,14 @@ public class MainActivity extends AppCompatActivity {
     private class InsertTransactionTask extends AsyncTask<Transaction, Void, Void> {
         @Override
         protected Void doInBackground(Transaction... transactions) {
-            transactionDao.insert(transactions[0]);
+            GlobalState state = GlobalState.getInstance();
+            if (state.getCalibrateMode()){
+                transactionCalibrateDao.insert(transactions[0]);
+            }
+            else {
+                transactionDao.insert(transactions[0]);
+            }
+
             return null;
         }
 
@@ -159,6 +169,9 @@ public class MainActivity extends AppCompatActivity {
 
         database = AppDatabase.getDatabase(this);
         transactionDao = database.transactionDao();
+
+        calibrateDatabase = AppCalibrateDatabase.getDatabase(this);
+        transactionCalibrateDao = calibrateDatabase.transactionDao();
 
         new LoadTransactionsTask().execute();
     }

@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 public class TransactionInspectionActivity extends AppCompatActivity {
 
     private TransactionDao transactionDao;
@@ -34,10 +37,11 @@ public class TransactionInspectionActivity extends AppCompatActivity {
         if (bundle != null && bundle.containsKey("transaction")) {
             currentTransaction = bundle.getParcelable("transaction");
             if (currentTransaction != null) {
-                titleTextView.setText(currentTransaction.getTitle());
-                sourceTextView.setText(currentTransaction.getSource());
-                amountTextView.setText(currentTransaction.getAmount());
-                timestampTextView.setText(String.valueOf(currentTransaction.getTimestamp()));
+                titleTextView.setText( currentTransaction.getTitle());
+                sourceTextView.setText("Source: " +currentTransaction.getSource());
+                amountTextView.setText("Amount: HK$" + currentTransaction.getAmount());
+                SimpleDateFormat sdf = new SimpleDateFormat("EEE dd MMM yyyy h:mm a", Locale.getDefault());
+                timestampTextView.setText("Created at: " + sdf.format(currentTransaction.getTimestamp()));
             }
         }
 
@@ -57,7 +61,10 @@ public class TransactionInspectionActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (currentTransaction != null) {
-                            transactionDao.deleteById(currentTransaction.getId());
+                            new Thread(() -> {
+                                transactionDao.deleteById(currentTransaction.getId());
+                            }).start();
+
                         }
                         finish();
                     }

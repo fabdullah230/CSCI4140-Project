@@ -13,7 +13,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder> {
 
@@ -39,7 +41,9 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         holder.titleTextView.setText(transaction.getTitle());
         holder.sourceTextView.setText(transaction.getSource());
         holder.amountTextView.setText(transaction.getAmount());
-        holder.timestampTextView.setText(String.valueOf(transaction.getTimestamp()));
+
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE dd MMM yyyy h:mm a", Locale.getDefault());
+        holder.timestampTextView.setText(sdf.format(transaction.getTimestamp()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
