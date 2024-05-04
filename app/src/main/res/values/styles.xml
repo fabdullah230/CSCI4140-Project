@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="DatePickerThemeLight" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@android:color/black</item> <!-- Used for the divider and also sometimes the button text -->
+
+    </style>
+
+    <style name="TimePickerThemeLight" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@android:color/black</item>
+
+
+    </style>
+
+
+</resources>
