@@ -248,7 +248,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openSettings(MenuItem item) {
-        startActivity(new Intent(this, SettingsActivity.class));
+        startActivity(new Intent(this, CalibrationPageActivity.class));
     }
 
     public void openAddTransactionDialog(View view) {

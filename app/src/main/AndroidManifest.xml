@@ -31,6 +31,10 @@
             android:name=".TransactionInspectionActivity"
             android:exported="true" />
 
+        <activity
+            android:name=".CalibrationPageActivity"
+            android:exported="true" />
+
 
         <activity
             android:name=".MainActivity"
