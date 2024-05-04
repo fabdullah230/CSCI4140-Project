@@ -45,10 +45,12 @@ public class CalibrationPageActivity  extends AppCompatActivity {
         message = findViewById(R.id.calibrationModeMessage);
 
         if (state.getCalibrateMode()) {
-            message.setVisibility(View.INVISIBLE);
+            message.setText("Captured notifications in calibration mode");
+            transactionsRecyclerView.setVisibility(View.VISIBLE);
             calibrateModeSwitch.setChecked(true);
         } else {
-            message.setVisibility(View.VISIBLE);
+            message.setText("Turn on to register new Transaction source");
+            transactionsRecyclerView.setVisibility(View.INVISIBLE);
             calibrateModeSwitch.setChecked(false);
         }
 
@@ -60,9 +62,11 @@ public class CalibrationPageActivity  extends AppCompatActivity {
                 state.setCalibrateMode(isChecked);
                 // Perform actions based on the state of the switch
                 if (isChecked) {
-                    message.setVisibility(View.INVISIBLE);
+                    message.setText("Captured notifications in calibration mode");
+                    transactionsRecyclerView.setVisibility(View.VISIBLE);
                 } else {
-                    message.setVisibility(View.VISIBLE);
+                    message.setText("Turn on to register new Transaction source");
+                    transactionsRecyclerView.setVisibility(View.INVISIBLE);
                 }
 
 

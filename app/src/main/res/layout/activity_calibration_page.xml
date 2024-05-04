@@ -20,15 +20,13 @@
         android:layout_marginBottom="20dp"
         android:layout_marginTop="16dp" />
 
-
-
     <TextView
         android:id="@+id/calibrateModeLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Calibrate Mode"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="20sp"
         app:layout_constraintTop_toBottomOf="@id/titleTextView"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="16dp"
@@ -46,8 +44,8 @@
         android:id="@+id/calibrationModeMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Turn on calibration mode to register new Transaction source"
-        android:textSize="20sp"
+        android:text="Turn on to register new Transaction source"
+        android:textSize="16sp"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/calibrateModeLabel"

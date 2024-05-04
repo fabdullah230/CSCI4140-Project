@@ -53,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
     private AppDatabase database;
     private TransactionDao transactionDao;
 
+    private Button button;
+
     private AppCalibrateDatabase calibrateDatabase;
     private TransactionDao transactionCalibrateDao;
     private BroadcastReceiver transactionReceiver;
@@ -147,7 +149,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        refreshData(null);
+        View refresh = findViewById(R.id.refreshButton);
+        refreshData(refresh);
+        new LoadTransactionsTask().execute();
     }
 
     @Override
