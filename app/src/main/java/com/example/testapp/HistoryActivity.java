@@ -24,7 +24,7 @@ public class HistoryActivity extends AppCompatActivity {
     public List<String> sources;
     private TransactionDao transactionDao;
     private AppDatabase database;
-    private TransactionAdapter adapter = new TransactionAdapter(new ArrayList<>());
+    private TransactionAdapter adapter = new TransactionAdapter(new ArrayList<>(), this);
     private Spinner sourceSpinner;
     private Button toggleButton;
 
@@ -45,7 +45,7 @@ public class HistoryActivity extends AppCompatActivity {
         sourceSpinner = findViewById(R.id.sourceSpinner);
         toggleButton = findViewById(R.id.beforeAfterToggle);
 
-        adapter = new TransactionAdapter(new ArrayList<>());
+        adapter = new TransactionAdapter(new ArrayList<>(), this);
 
 
         RecyclerView transactionsRecyclerView = findViewById(R.id.transactionsRecyclerView1);
@@ -103,15 +103,11 @@ public class HistoryActivity extends AppCompatActivity {
             for (Transaction t : transactions){
                 System.out.println(t);
             }
-            if (adapter == null) {
-                adapter = new TransactionAdapter(transactions);
-                RecyclerView transactionsRecyclerView = findViewById(R.id.transactionsRecyclerView1);
-                transactionsRecyclerView.setAdapter(adapter);
-            } else {
+
                 runOnUiThread(() -> adapter.updateTransactions(transactions));
 //                adapter.updateTransactions(transactions);
 //                adapter.notifyDataSetChanged();
-            }
+
 
         }
     }
@@ -124,13 +120,9 @@ public class HistoryActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(List<Transaction> transactions) {
-            if (adapter == null) {
-                adapter = new TransactionAdapter(transactions);
-                RecyclerView transactionsRecyclerView = findViewById(R.id.transactionsRecyclerView1);
-                transactionsRecyclerView.setAdapter(adapter);
-            } else {
+
                 adapter.updateTransactions(transactions);
-            }
+
         }
     }
 
@@ -142,13 +134,9 @@ public class HistoryActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(List<Transaction> transactions) {
-            if (adapter == null) {
-                adapter = new TransactionAdapter(transactions);
-                RecyclerView transactionsRecyclerView = findViewById(R.id.transactionsRecyclerView1);
-                transactionsRecyclerView.setAdapter(adapter);
-            } else {
+
                 adapter.updateTransactions(transactions);
-            }
+
         }
     }
 
@@ -160,13 +148,9 @@ public class HistoryActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(List<Transaction> transactions) {
-            if (adapter == null) {
-                adapter = new TransactionAdapter(transactions);
-                RecyclerView transactionsRecyclerView = findViewById(R.id.transactionsRecyclerView1);
-                transactionsRecyclerView.setAdapter(adapter);
-            } else {
+
                 adapter.updateTransactions(transactions);
-            }
+
         }
     }
 
@@ -192,13 +176,9 @@ public class HistoryActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(List<Transaction> transactions) {
-            if (adapter == null) {
-                adapter = new TransactionAdapter(transactions);
-                RecyclerView transactionsRecyclerView = findViewById(R.id.transactionsRecyclerView1);
-                transactionsRecyclerView.setAdapter(adapter);
-            } else {
+
                 adapter.updateTransactions(transactions);
-            }
+
         }
     }
 

@@ -1,20 +1,28 @@
 package com.example.testapp;
 
+// TransactionAdapter.java
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.testapp.R;
+
 import java.util.List;
 
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder> {
 
     private List<Transaction> transactions;
+    private Context context;
 
-    public TransactionAdapter(List<Transaction> transactions) {
+    public TransactionAdapter(List<Transaction> transactions, Context context) {
         this.transactions = transactions;
+        this.context = context;
     }
 
     @NonNull
@@ -32,6 +40,21 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         holder.sourceTextView.setText(transaction.getSource());
         holder.amountTextView.setText(transaction.getAmount());
         holder.timestampTextView.setText(String.valueOf(transaction.getTimestamp()));
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openTransactionInspection(transaction);
+            }
+        });
+    }
+
+    private void openTransactionInspection(Transaction transaction) {
+        Intent intent = new Intent(context, TransactionInspectionActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("transaction", transaction);
+        intent.putExtras(bundle);
+        context.startActivity(intent);
     }
 
     @Override

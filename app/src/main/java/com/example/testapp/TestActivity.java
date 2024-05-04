@@ -46,7 +46,7 @@ public class TestActivity extends AppCompatActivity {
         transactionsRecyclerView = findViewById(R.id.transactionsRecyclerView);
         transactionsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter = new TransactionAdapter(new ArrayList<>());
+        adapter = new TransactionAdapter(new ArrayList<>(), this);
         transactionsRecyclerView.setAdapter(adapter);
 
         database = AppDatabase.getDatabase(this);

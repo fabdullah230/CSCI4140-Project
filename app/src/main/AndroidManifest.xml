@@ -27,6 +27,10 @@
             android:name=".TestActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".TransactionInspectionActivity"
+            android:exported="true" />
+
 
         <activity
             android:name=".MainActivity"

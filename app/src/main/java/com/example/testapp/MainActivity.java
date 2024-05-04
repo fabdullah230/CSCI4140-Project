@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(List<Transaction> transactions) {
             super.onPostExecute(transactions);
             if (adapter == null) {
-                adapter = new TransactionAdapter(transactions);
+                adapter = new TransactionAdapter(transactions, MainActivity.this);
                 RecyclerView transactionsRecyclerView = findViewById(R.id.transactionsRecyclerView);
                 transactionsRecyclerView.setAdapter(adapter);
             } else {

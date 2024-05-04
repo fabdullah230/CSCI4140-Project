@@ -39,4 +39,6 @@ public interface TransactionDao {
 
     @Query("SELECT * FROM transactions WHERE timestamp > :timestamp AND source = :source ORDER BY timestamp DESC")
     List<Transaction> getTransactionsAfterBySource(long timestamp, String source);
+
+
 }
