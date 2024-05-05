@@ -23,7 +23,16 @@ public class Transaction implements Parcelable{
     private boolean isShared;
 
     private String sharedAmount;
+    private String personalAmount;
     private String comments;
+
+    public String getPersonalAmount() {
+        return personalAmount;
+    }
+
+    public void setPersonalAmount(String personalAmount) {
+        this.personalAmount = personalAmount;
+    }
 
     public String getComments() {
         return comments;
@@ -97,6 +106,7 @@ public class Transaction implements Parcelable{
                 ", timestamp=" + timestamp +
                 ", isShared=" + isShared +
                 ", sharedAmount='" + sharedAmount + '\'' +
+                ", personalAmount='" + personalAmount + '\'' +
                 ", comments='" + comments + '\'' +
                 '}';
     }
@@ -110,6 +120,7 @@ public class Transaction implements Parcelable{
         this.isShared = false;
         this.comments = "No Comments";
         this.sharedAmount = "0.0";
+        this.personalAmount = amount;
         System.out.println(this);
     }
 
@@ -122,6 +133,7 @@ public class Transaction implements Parcelable{
         isShared = in.readBoolean();
         comments = in.readString();
         sharedAmount = in.readString();
+        personalAmount = in.readString();
     }
 
     @Override
@@ -134,7 +146,7 @@ public class Transaction implements Parcelable{
         dest.writeBoolean(isShared);
         dest.writeString(comments);
         dest.writeString(sharedAmount);
-
+        dest.writeString(personalAmount);
     }
 
     @Override

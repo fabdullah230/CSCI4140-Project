@@ -29,6 +29,7 @@ public class TransactionInspectionActivity extends AppCompatActivity {
     private TextView commentsTextView;
     private ImageButton editCommentsButton;
     private EditText editCommentsEditText;
+    private TextView personalAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,9 @@ public class TransactionInspectionActivity extends AppCompatActivity {
         commentsTextView = findViewById(R.id.commentsTextView);
         editCommentsButton = findViewById(R.id.editCommentsButton);
         editCommentsEditText = new EditText(this);
+
+        personalAmount = findViewById(R.id.personalAmountTextView);
+
         Button deleteButton = findViewById(R.id.deleteButton);
 
         Bundle bundle = getIntent().getExtras();
@@ -59,6 +63,13 @@ public class TransactionInspectionActivity extends AppCompatActivity {
                 SimpleDateFormat sdf = new SimpleDateFormat("EEE dd MMM yyyy h:mm a", Locale.getDefault());
                 timestampTextView.setText("Created at: " + sdf.format(currentTransaction.getTimestamp()));
                 commentsTextView.setText(currentTransaction.getComments());
+                sharedSwitch.setChecked(currentTransaction.isShared());
+                if(currentTransaction.isShared()){
+                    sharedAmountEditText.setText(currentTransaction.getSharedAmount());
+                    sharedAmountEditText.setVisibility(View.VISIBLE);
+                    personalAmount.setText("Personal amount: HK$" + currentTransaction.getPersonalAmount());
+                    personalAmount.setVisibility(View.VISIBLE);
+                }
             }
         }
 
@@ -91,7 +102,30 @@ public class TransactionInspectionActivity extends AppCompatActivity {
                 if (currentTransaction != null) {
                     String sharedAmountStr = s.toString();
                     if (!TextUtils.isEmpty(sharedAmountStr)) {
-                        currentTransaction.setSharedAmount(sharedAmountStr);
+                        double sharedAmount = Double.parseDouble(sharedAmountStr);
+                        double totalAmount = Double.parseDouble(currentTransaction.getAmount());
+
+                        if (sharedAmount > totalAmount) {
+                            sharedAmountStr = currentTransaction.getAmount(); // Reduce shared amount to transaction amount
+                        }
+
+                        String finalSharedAmountStr = sharedAmountStr;
+                        new Thread(() -> {
+                            transactionDao.updateSharedAmount(currentTransaction.getId(), finalSharedAmountStr);
+                            double updatedAmount = totalAmount - Double.parseDouble(finalSharedAmountStr);
+                            transactionDao.editPersonalAmountById(currentTransaction.getId(), String.valueOf(updatedAmount));
+                            transactionDao.setIsShared(currentTransaction.getId(), true);
+                            runOnUiThread(() -> {
+                                currentTransaction.setSharedAmount(finalSharedAmountStr);
+                                currentTransaction.setPersonalAmount(String.valueOf(updatedAmount));
+
+                                personalAmount.setText("Personal amount: HK$" + currentTransaction.getPersonalAmount());
+                                personalAmount.setVisibility(View.VISIBLE);
+                            });
+                        }).start();
+
+
+
                     }
                 }
             }
@@ -112,7 +146,10 @@ public class TransactionInspectionActivity extends AppCompatActivity {
 
                     // Update comments in the currentTransaction object
                     if (currentTransaction != null) {
-                        currentTransaction.setComments(newComments);
+//                        currentTransaction.setComments(newComments);
+                        new Thread(() -> {
+                            transactionDao.editCommentById(currentTransaction.getId(), newComments);
+                        }).start();
                     }
                 })
                 .setNegativeButton("Cancel", null)

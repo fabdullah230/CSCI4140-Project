@@ -42,6 +42,9 @@ public interface TransactionDao {
     @Query("UPDATE transactions SET amount = :amount WHERE id = :transactionId")
     void editAmountById(int transactionId, String amount);
 
+    @Query("UPDATE transactions SET personalAmount = :personalAmount WHERE id = :transactionId")
+    void editPersonalAmountById(int transactionId, String personalAmount);
+
     @Query("UPDATE transactions SET title = :title WHERE id = :transactionId")
     void editTitleById(int transactionId, String title);
 

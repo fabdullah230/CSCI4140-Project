@@ -29,6 +29,9 @@ public class CalibrationPageActivity  extends AppCompatActivity {
     private NotificationSourceAdapter notificationSourceAdapter;
     private RecyclerView notificationSourceRecyclerView;
 
+    NotificationSourceDatabase notificationSourceDatabase;
+    NotificationSourcesDao notificationSourcesDao;
+
     TextView message;
 
     @Override
@@ -46,28 +49,37 @@ public class CalibrationPageActivity  extends AppCompatActivity {
         calibrateDatabase = AppCalibrateDatabase.getDatabase(this);
         transactionDao = calibrateDatabase.transactionDao();
 
+        notificationSourceRecyclerView = findViewById(R.id.notificationSourcesRecyclerView);
+        notificationSourceRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        notificationSourceAdapter = new NotificationSourceAdapter(this, new ArrayList<>());
+//        notificationSourceAdapter.setClickListener(this);
+        notificationSourceRecyclerView.setAdapter(notificationSourceAdapter);
+
+        notificationSourceDatabase = NotificationSourceDatabase.getDatabase(this);
+        notificationSourcesDao = notificationSourceDatabase.notificationSourcesDao();
+
         SwitchCompat calibrateModeSwitch = findViewById(R.id.calibrateModeSwitch);
         message = findViewById(R.id.calibrationModeMessage);
 
         if (state.getCalibrateMode()) {
             message.setText("Captured notifications in calibration mode");
             transactionsRecyclerView.setVisibility(View.VISIBLE);
+            notificationSourceRecyclerView.setVisibility(View.INVISIBLE);
             calibrateModeSwitch.setChecked(true);
         } else {
-            message.setText("Turn on to register new Transaction source");
+            message.setText("Registered Transaction sources: ");
             transactionsRecyclerView.setVisibility(View.INVISIBLE);
+            notificationSourceRecyclerView.setVisibility(View.VISIBLE);
             calibrateModeSwitch.setChecked(false);
         }
 
         fetchCalibrateTransactions();
+        fetchRegisteredNotificationSources();
 
 
-        notificationSourceRecyclerView = findViewById(R.id.notificationSourcesRecyclerView);
-        notificationSourceRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        notificationSourceAdapter = new NotificationSourceAdapter(this, notificationSources);
-//        notificationSourceAdapter.setClickListener(this);
-        notificationSourceRecyclerView.setAdapter(notificationSourceAdapter);
+
 
 
 
@@ -79,9 +91,11 @@ public class CalibrationPageActivity  extends AppCompatActivity {
                 if (isChecked) {
                     message.setText("Captured notifications in calibration mode");
                     transactionsRecyclerView.setVisibility(View.VISIBLE);
+                    notificationSourceRecyclerView.setVisibility(View.INVISIBLE);
                 } else {
-                    message.setText("Turn on to register new Transaction source");
+                    message.setText("Registered Transaction sources: ");
                     transactionsRecyclerView.setVisibility(View.INVISIBLE);
+                    notificationSourceRecyclerView.setVisibility(View.VISIBLE);
                 }
 
 
@@ -107,6 +121,7 @@ public class CalibrationPageActivity  extends AppCompatActivity {
                 customToast.show();
             }
         });
+
     }
 
     @Override
@@ -129,4 +144,22 @@ public class CalibrationPageActivity  extends AppCompatActivity {
             runOnUiThread(() -> adapter.updateTransactions(finalTransactions));
         }).start();
     }
+
+    private void fetchRegisteredNotificationSources() {
+        new Thread(() -> {
+            List<NotificationSource> notificationSources1 = new ArrayList<>();
+            try {
+                notificationSources1 = notificationSourcesDao.getAllNotificationSources();
+            } catch (Exception e) {
+                System.out.println("Error fetching data.");
+            }
+
+            List<NotificationSource> notificationSources11 = notificationSources1;
+            runOnUiThread(() -> notificationSourceAdapter.updateNotificationSources(notificationSources11));
+        }).start();
+    }
+
+
+
+
 }

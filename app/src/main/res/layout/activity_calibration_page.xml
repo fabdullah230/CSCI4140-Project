@@ -52,15 +52,19 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp" />
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/notificationSourcesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/calibrationModeMessage"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
+        app:layout_constraintTop_toBottomOf="@id/calibrationModeMessage"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:layout_constraintVertical_bias="0.037" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/transactionsRecyclerView"

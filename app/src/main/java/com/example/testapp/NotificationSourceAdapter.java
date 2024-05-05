@@ -16,11 +16,18 @@ public class NotificationSourceAdapter extends RecyclerView.Adapter<Notification
     private List<NotificationSource> notificationSources;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
+    Context context;
+
+    NotificationSourceDatabase notificationSourceDatabase;
+    NotificationSourcesDao notificationSourcesDao;
 
     // data is passed into the constructor
     NotificationSourceAdapter(Context context, List<NotificationSource> data) {
         this.mInflater = LayoutInflater.from(context);
         this.notificationSources = data;
+        this.context = context;
+        notificationSourceDatabase = NotificationSourceDatabase.getDatabase(context);
+        notificationSourcesDao = notificationSourceDatabase.notificationSourcesDao();
     }
 
     // inflates the row layout from xml when needed
@@ -38,8 +45,24 @@ public class NotificationSourceAdapter extends RecyclerView.Adapter<Notification
         holder.packageNameTextView.setText(source.getPackageName());
         holder.shouldContainTextView.setText(source.getShouldContain());
         holder.deleteButton.setOnClickListener(v -> {
-            if (mClickListener != null) mClickListener.onDeleteClick(position);
+            System.out.println("Delete pressed");
+            deleteNotificationSource(source);
         });
+    }
+
+    private void deleteNotificationSource(NotificationSource source){
+        new Thread(() -> {
+            notificationSourcesDao.deleteByPackageName(source.getPackageName());
+            notificationSources.clear();
+            notificationSources.addAll(notificationSourcesDao.getAllNotificationSources());
+        }).start();
+        notifyDataSetChanged();
+    }
+
+    public void updateNotificationSources(List<NotificationSource> notificationSources1){
+        notificationSources.clear();
+        notificationSources.addAll(notificationSources1);
+        notifyDataSetChanged();
     }
 
     // total number of rows

@@ -94,6 +94,8 @@ public class NotificationListener extends NotificationListenerService {
         String packageName = sbn.getPackageName();
         long timestamp = sbn.getPostTime();
 
+        System.out.println(sbn);
+
         if(state.getCalibrateMode()){
             return new Transaction(title, packageName, "0.0", timestamp);
 
