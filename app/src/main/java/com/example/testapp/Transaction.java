@@ -131,9 +131,10 @@ public class Transaction implements Parcelable{
         dest.writeString(source);
         dest.writeString(amount);
         dest.writeLong(timestamp);
+        dest.writeBoolean(isShared);
         dest.writeString(comments);
         dest.writeString(sharedAmount);
-        dest.writeBoolean(isShared);
+
     }
 
     @Override
