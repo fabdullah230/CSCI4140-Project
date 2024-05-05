@@ -262,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle("Sidebar Opened")
-                .setContentText("You have opened the sidebar." + System.currentTimeMillis())
+                .setContentText("You have opened the sidebar. Random amount: " + ((int) (Math.random() * (1000 - 50 + 1)) + 50))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true);
 

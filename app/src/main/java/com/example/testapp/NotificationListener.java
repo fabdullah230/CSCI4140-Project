@@ -101,7 +101,7 @@ public class NotificationListener extends NotificationListenerService {
 
         } else {
             for (NotificationSource n : registeredSources){
-                System.out.println(n);
+                System.out.println("current: " + n.getPackageName() + ", matching: " + packageName);
                 if (packageName.equals(n.getPackageName())){
 
                     String transactionSource = n.getName();

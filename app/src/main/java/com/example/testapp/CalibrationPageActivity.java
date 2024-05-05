@@ -95,6 +95,7 @@ public class CalibrationPageActivity  extends AppCompatActivity {
                 } else {
                     message.setText("Registered Transaction sources: ");
                     transactionsRecyclerView.setVisibility(View.INVISIBLE);
+                    fetchCalibrateTransactions();
                     notificationSourceRecyclerView.setVisibility(View.VISIBLE);
                 }
 

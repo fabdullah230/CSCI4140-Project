@@ -20,6 +20,9 @@ import java.util.Locale;
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder> {
 
     private List<Transaction> transactions;
+
+
+
     private Context context;
     GlobalState state;
 
