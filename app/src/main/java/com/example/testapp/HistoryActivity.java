@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -36,11 +37,31 @@ public class HistoryActivity extends AppCompatActivity {
 
     private long selectedTime = 0;
 
+    private TextView sumAmount;
+    private TextView sumPersonalAmount;
+
     @Override
     protected void onResume() {
         super.onResume();
         fetchTransactionsWithSourceAndTimeBeforeAfter();
     }
+
+    public void setSumAmount(List<Transaction> transactions){
+        double sum = 0;
+        for (Transaction t : transactions){
+            sum += Double.parseDouble(t.getAmount());
+        }
+        sumAmount.setText("Total amount: HK$ " + String.format("%.2f", sum));
+    }
+
+    public void setSumPersonalAmount(List<Transaction> transactions){
+        double sum = 0;
+        for (Transaction t : transactions){
+            sum += Double.parseDouble(t.getPersonalAmount());
+        }
+        sumPersonalAmount.setText("Personal: HK$ " + String.format("%.2f", sum));
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +78,9 @@ public class HistoryActivity extends AppCompatActivity {
 
         database = AppDatabase.getDatabase(this);
         transactionDao = database.transactionDao();
+
+        sumAmount = findViewById(R.id.sumAmount);
+        sumPersonalAmount = findViewById(R.id.sumPersonalAmount);
 
 
 
@@ -85,14 +109,19 @@ public class HistoryActivity extends AppCompatActivity {
             }
 
             List<Transaction> finalTransactions = transactions;
-            runOnUiThread(() -> adapter.updateTransactions(finalTransactions));
+
+            runOnUiThread(() -> {
+                adapter.updateTransactions(finalTransactions);
+                setSumAmount(finalTransactions);
+                setSumPersonalAmount(finalTransactions);
+            });
         }).start();
     }
 
     private void fetchSources() {
         new Thread(() -> {
             List<String> sources = transactionDao.getUniqueSources();
-            sources.add("All");
+            sources.add(0, "All");
 
             // Run on UI thread to update UI components
             runOnUiThread(() -> {
@@ -100,6 +129,7 @@ public class HistoryActivity extends AppCompatActivity {
                 ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(HistoryActivity.this, R.layout.spinner_item, sources);
                 arrayAdapter.setDropDownViewResource(R.layout.spinner_item); // Use custom layout for dropdown view as well
                 sourceSpinner.setAdapter(arrayAdapter);
+
 
                 sourceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
@@ -117,6 +147,11 @@ public class HistoryActivity extends AppCompatActivity {
                     public void onNothingSelected(AdapterView<?> parent) {
                     }
                 });
+
+                int defaultSelection = 0; // Index of "All" in the sources list
+                sourceSpinner.setSelection(defaultSelection);
+
+
             });
         }).start();
     }
@@ -195,7 +230,11 @@ public class HistoryActivity extends AppCompatActivity {
             for (Transaction t: transactions){
                 System.out.println(transactions);
             }
-            runOnUiThread(() -> adapter.updateTransactions(finalTransactions));
+            runOnUiThread(() -> {
+                adapter.updateTransactions(finalTransactions);
+                setSumAmount(finalTransactions);
+                setSumPersonalAmount(finalTransactions);
+            });
         }).start();
     }
 

@@ -71,12 +71,36 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp" />
 
+    <TextView
+        android:id="@+id/sumAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="HK$ 0"
+        android:textColor="@color/black"
+        android:textSize="28sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/beforeAfterToggle" />
+
+    <TextView
+        android:id="@+id/sumPersonalAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="HK$ 0"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sumAmount" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/transactionsRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/beforeAfterToggle"
+        app:layout_constraintTop_toBottomOf="@id/sumPersonalAmount"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
