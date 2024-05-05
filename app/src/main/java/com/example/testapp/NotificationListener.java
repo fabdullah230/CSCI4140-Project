@@ -1,6 +1,7 @@
 package com.example.testapp;
 
 import android.app.Notification;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.service.notification.NotificationListenerService;
@@ -20,16 +21,21 @@ public class NotificationListener extends NotificationListenerService {
 
     private List<NotificationSource> registeredSources;
 
-    private GlobalState state = GlobalState.getInstance(this);
+    private GlobalState state = GlobalState.getInstance();
 
-    public NotificationListener(){
-        database = state.getDatabase();
+    Context context;
+
+
+
+    @Override
+    public void onCreate(){
+        context = getApplicationContext();
+        database = NotificationSourceDatabase.getDatabase(context);
         notificationSourcesDao = database.notificationSourcesDao();
 
         new Thread(() -> {
             registeredSources = notificationSourcesDao.getAllNotificationSources();
         }).start();
-
     }
 
     @Override
@@ -37,6 +43,7 @@ public class NotificationListener extends NotificationListenerService {
         super.onNotificationPosted(sbn);
         // Parse the notification and create a Transaction object
         Transaction transaction = parseNotification(sbn);
+        System.out.println(transaction);
         if (transaction != null) {
 //            new InsertTransactionTask().execute(transaction);
             Intent intent = new Intent("transaction_received");
@@ -88,11 +95,12 @@ public class NotificationListener extends NotificationListenerService {
         long timestamp = sbn.getPostTime();
 
         if(state.getCalibrateMode()){
-            return new Transaction(title, packageName, "0", timestamp);
+            return new Transaction(title, packageName, "0.0", timestamp);
 
         } else {
             for (NotificationSource n : registeredSources){
-                if (packageName.equals(n.getPackageName()) && text.contains(n.getShouldContain())){
+                System.out.println(n);
+                if (packageName.equals(n.getPackageName())){
 
                     String transactionSource = n.getName();
                     String transactionAmount = String.valueOf(parseFirstNumber(text));

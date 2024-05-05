@@ -9,17 +9,17 @@ public class GlobalState {
 //    private SharedPreferences sharedPreferences;
 //    private SharedPreferences.Editor editor;
 
-    private NotificationSourceDatabase database;
+//    private NotificationSourceDatabase database;
 
-    private GlobalState(Context context) {
-//        sharedPreferences = context.getSharedPreferences("my_preferences", Context.MODE_PRIVATE);
-//        editor = sharedPreferences.edit();
-        database = NotificationSourceDatabase.getDatabase(context);
-    }
+//    private GlobalState(Context context) {
+////        sharedPreferences = context.getSharedPreferences("my_preferences", Context.MODE_PRIVATE);
+////        editor = sharedPreferences.edit();
+//        database = NotificationSourceDatabase.getDatabase(context);
+//    }
 
-    public static synchronized GlobalState getInstance(Context context) {
+    public static synchronized GlobalState getInstance() {
         if (instance == null) {
-            instance = new GlobalState(context);
+            instance = new GlobalState();
         }
         return instance;
     }
@@ -32,9 +32,9 @@ public class GlobalState {
         this.calibrateMode = calibrateMode;
     }
 
-    public NotificationSourceDatabase getDatabase() {
-        return database;
-    }
+//    public NotificationSourceDatabase getDatabase() {
+//        return database;
+//    }
 }
 
 

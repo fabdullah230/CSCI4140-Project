@@ -141,7 +141,8 @@ public class MainActivity extends AppCompatActivity {
     private class InsertTransactionTask extends AsyncTask<Transaction, Void, Void> {
         @Override
         protected Void doInBackground(Transaction... transactions) {
-            GlobalState state = GlobalState.getInstance(MainActivity.this);
+            GlobalState state = GlobalState.getInstance();
+            System.out.println(transactions[0]);
             if (state.getCalibrateMode()){
                 transactionCalibrateDao.insert(transactions[0]);
             }

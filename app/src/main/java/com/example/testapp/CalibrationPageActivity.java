@@ -22,7 +22,7 @@ public class CalibrationPageActivity  extends AppCompatActivity {
 
     private AppCalibrateDatabase calibrateDatabase;
     private TransactionDao transactionDao;
-    GlobalState state = GlobalState.getInstance(this);
+    GlobalState state = GlobalState.getInstance();
 
 
     private List<NotificationSource> notificationSources = new ArrayList<>();

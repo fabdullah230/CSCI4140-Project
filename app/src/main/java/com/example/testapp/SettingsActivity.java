@@ -12,7 +12,7 @@ import androidx.appcompat.widget.SwitchCompat;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    GlobalState state = GlobalState.getInstance(this);
+    GlobalState state = GlobalState.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

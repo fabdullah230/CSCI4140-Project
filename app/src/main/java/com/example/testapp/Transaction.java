@@ -110,6 +110,7 @@ public class Transaction implements Parcelable{
         this.isShared = false;
         this.comments = "No Comments";
         this.sharedAmount = "0.0";
+        System.out.println(this);
     }
 
     protected Transaction(Parcel in) {

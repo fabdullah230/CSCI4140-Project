@@ -26,7 +26,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     public TransactionAdapter(List<Transaction> transactions, Context context) {
         this.transactions = transactions;
         this.context = context;
-        state = GlobalState.getInstance(context);
+        state = GlobalState.getInstance();
     }
 
     @NonNull

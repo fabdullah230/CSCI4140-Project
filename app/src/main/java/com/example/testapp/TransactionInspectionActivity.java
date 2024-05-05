@@ -51,6 +51,7 @@ public class TransactionInspectionActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null && bundle.containsKey("transaction")) {
             currentTransaction = bundle.getParcelable("transaction");
+            System.out.println("Received by inspection activity" + currentTransaction);
             if (currentTransaction != null) {
                 titleTextView.setText(currentTransaction.getTitle());
                 sourceTextView.setText("Source: " + currentTransaction.getSource());
@@ -120,10 +121,12 @@ public class TransactionInspectionActivity extends AppCompatActivity {
         // Set the original comment as the filled text in the edit text
         if (currentTransaction != null) {
             String originalComment = currentTransaction.getComments();
-            System.out.println(currentTransaction);
-            System.out.println("comment: " + originalComment);
-            editCommentsEditText.setText(originalComment);
-            editCommentsEditText.setSelection(originalComment.length());
+            if (originalComment != null) {
+                editCommentsEditText.setText(originalComment);
+                editCommentsEditText.setSelection(originalComment.length());
+            } else {
+                editCommentsEditText.setText("");  // Ensure the field is empty if there is no comment
+            }
         }
     }
 
