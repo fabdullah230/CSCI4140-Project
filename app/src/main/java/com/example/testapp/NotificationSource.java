@@ -41,4 +41,13 @@ public class NotificationSource {
         this.name = name;
         this.shouldContain = shouldContain;
     }
+
+    @Override
+    public String toString() {
+        return "NotificationSource{" +
+                "packageName='" + packageName + '\'' +
+                ", name='" + name + '\'' +
+                ", shouldContain='" + shouldContain + '\'' +
+                '}';
+    }
 }

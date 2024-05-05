@@ -8,8 +8,29 @@ import android.service.notification.StatusBarNotification;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class NotificationListener extends NotificationListenerService {
     private static final String TAG = "NotificationListener";
+
+    private NotificationSourceDatabase database;
+    private NotificationSourcesDao notificationSourcesDao;
+
+    private List<NotificationSource> registeredSources;
+
+    private GlobalState state = GlobalState.getInstance(this);
+
+    public NotificationListener(){
+        database = state.getDatabase();
+        notificationSourcesDao = database.notificationSourcesDao();
+
+        new Thread(() -> {
+            registeredSources = notificationSourcesDao.getAllNotificationSources();
+        }).start();
+
+    }
 
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
@@ -44,6 +65,21 @@ public class NotificationListener extends NotificationListenerService {
 
     }
 
+    public static double parseFirstNumber(String input) {
+        String numberRegex = "[-+]?\\d+(\\.\\d+)?"; // Regular expression for matching numbers (including decimals)
+
+        // Find the first number in the input string
+        Pattern pattern = Pattern.compile(numberRegex);
+        Matcher matcher = pattern.matcher(input);
+        if (matcher.find()) {
+            String numberString = matcher.group();
+            return Double.parseDouble(numberString);
+        } else {
+            // No number found in the string
+            return 0;
+        }
+    }
+
     private Transaction parseNotification(StatusBarNotification sbn) {
         // Extract relevant information from the notification
         String title = sbn.getNotification().extras.getString(Notification.EXTRA_TITLE);
@@ -51,22 +87,22 @@ public class NotificationListener extends NotificationListenerService {
         String packageName = sbn.getPackageName();
         long timestamp = sbn.getPostTime();
 
-        // Parse the notification data and create a Transaction object
-        // You can customize this based on the structure of the notifications you want to capture
-        String transactionTitle = title;
-        String transactionSource = packageName;
-        String transactionAmount = "0"; // Default amount is zero
+        if(state.getCalibrateMode()){
+            return new Transaction(title, packageName, "0", timestamp);
 
+        } else {
+            for (NotificationSource n : registeredSources){
+                if (packageName.equals(n.getPackageName()) && text.contains(n.getShouldContain())){
 
-        // Extract amount from the notification text if available
-        if (text != null) {
-            // Use regular expressions or string manipulation to extract the amount
-            // For example, if the amount is prefixed with "Amount: "
-            if (text.contains("Amount: ")) {
-                transactionAmount = text.split("Amount: ")[1];
+                    String transactionSource = n.getName();
+                    String transactionAmount = String.valueOf(parseFirstNumber(text));
+                    return new Transaction(title, transactionSource, transactionAmount, timestamp);
+
+                }
             }
         }
 
-        return new Transaction(transactionTitle, transactionSource, transactionAmount, timestamp);
+
+        return null;
     }
 }

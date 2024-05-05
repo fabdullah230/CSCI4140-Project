@@ -24,6 +24,11 @@ public class CalibrationPageActivity  extends AppCompatActivity {
     private TransactionDao transactionDao;
     GlobalState state = GlobalState.getInstance(this);
 
+
+    private List<NotificationSource> notificationSources = new ArrayList<>();
+    private NotificationSourceAdapter notificationSourceAdapter;
+    private RecyclerView notificationSourceRecyclerView;
+
     TextView message;
 
     @Override
@@ -55,6 +60,16 @@ public class CalibrationPageActivity  extends AppCompatActivity {
         }
 
         fetchCalibrateTransactions();
+
+
+        notificationSourceRecyclerView = findViewById(R.id.notificationSourcesRecyclerView);
+        notificationSourceRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        notificationSourceAdapter = new NotificationSourceAdapter(this, notificationSources);
+//        notificationSourceAdapter.setClickListener(this);
+        notificationSourceRecyclerView.setAdapter(notificationSourceAdapter);
+
+
 
         calibrateModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

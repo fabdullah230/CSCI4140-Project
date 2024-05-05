@@ -6,12 +6,15 @@ import android.content.SharedPreferences;
 public class GlobalState {
     private static GlobalState instance;
     private boolean calibrateMode;
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
+//    private SharedPreferences sharedPreferences;
+//    private SharedPreferences.Editor editor;
+
+    private NotificationSourceDatabase database;
 
     private GlobalState(Context context) {
-        sharedPreferences = context.getSharedPreferences("my_preferences", Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
+//        sharedPreferences = context.getSharedPreferences("my_preferences", Context.MODE_PRIVATE);
+//        editor = sharedPreferences.edit();
+        database = NotificationSourceDatabase.getDatabase(context);
     }
 
     public static synchronized GlobalState getInstance(Context context) {
@@ -22,15 +25,16 @@ public class GlobalState {
     }
 
     public boolean getCalibrateMode() {
-        return sharedPreferences.getBoolean("calibrate_mode", false);
+        return calibrateMode;
     }
 
     public void setCalibrateMode(boolean calibrateMode) {
-        editor.putBoolean("calibrate_mode", calibrateMode);
-        editor.apply();
+        this.calibrateMode = calibrateMode;
     }
 
-
+    public NotificationSourceDatabase getDatabase() {
+        return database;
+    }
 }
 
 

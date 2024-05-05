@@ -24,7 +24,8 @@ public interface NotificationSourcesDao {
     @Query("UPDATE sources SET shouldContain = :shouldContain WHERE packageName = :packageName")
     void editShouldContainByPackageName(String packageName, String shouldContain);
 
-
+    @Query("SELECT * FROM sources WHERE packageName = :packageName")
+    NotificationSource getNotificationSourceByPackageName(String packageName);
 
 
 }
