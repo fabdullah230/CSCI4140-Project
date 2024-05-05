@@ -16,19 +16,45 @@ public class Transaction implements Parcelable{
     @NonNull
     private int id;
     private String title;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     private String source;
     private String amount;
     private long timestamp;
 
+    private boolean isShared;
+
+    private String sharedAmount;
+    private String comments;
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public boolean isShared() {
+        return isShared;
+    }
+
+    public void setShared(boolean shared) {
+        isShared = shared;
+    }
+
+    public String getSharedAmount() {
+        return sharedAmount;
+    }
+
+    public void setSharedAmount(String sharedAmount) {
+        this.sharedAmount = sharedAmount;
+    }
+
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
     public String getTitle() {
         return title;
     }
@@ -68,10 +94,12 @@ public class Transaction implements Parcelable{
                 ", title='" + title + '\'' +
                 ", source='" + source + '\'' +
                 ", amount='" + amount + '\'' +
-                ", timestamp='" + timestamp + '\'' +
+                ", timestamp=" + timestamp +
+                ", isShared=" + isShared +
+                ", sharedAmount='" + sharedAmount + '\'' +
+                ", comments='" + comments + '\'' +
                 '}';
     }
-
 
     public Transaction(String title, String source, String amount, long timestamp) {
         this.title = title;
@@ -79,6 +107,9 @@ public class Transaction implements Parcelable{
         this.amount = amount;
         this.timestamp = timestamp;
         this.id = (int) (Math.random() * (10000000 + 1));
+        this.isShared = false;
+        this.comments = "No Comments";
+        this.sharedAmount = "0.0";
     }
 
     protected Transaction(Parcel in) {
@@ -87,6 +118,9 @@ public class Transaction implements Parcelable{
         source = in.readString();
         amount = in.readString();
         timestamp = in.readLong();
+        isShared = in.readBoolean();
+        comments = in.readString();
+        sharedAmount = in.readString();
     }
 
     @Override
@@ -96,6 +130,9 @@ public class Transaction implements Parcelable{
         dest.writeString(source);
         dest.writeString(amount);
         dest.writeLong(timestamp);
+        dest.writeString(comments);
+        dest.writeString(sharedAmount);
+        dest.writeBoolean(isShared);
     }
 
     @Override

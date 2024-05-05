@@ -22,7 +22,7 @@ public class CalibrationPageActivity  extends AppCompatActivity {
 
     private AppCalibrateDatabase calibrateDatabase;
     private TransactionDao transactionDao;
-    GlobalState state = GlobalState.getInstance();
+    GlobalState state = GlobalState.getInstance(this);
 
     TextView message;
 

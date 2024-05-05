@@ -21,10 +21,12 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
     private List<Transaction> transactions;
     private Context context;
+    GlobalState state;
 
     public TransactionAdapter(List<Transaction> transactions, Context context) {
         this.transactions = transactions;
         this.context = context;
+        state = GlobalState.getInstance(context);
     }
 
     @NonNull
@@ -48,9 +50,22 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openTransactionInspection(transaction);
+                if (state.getCalibrateMode()) {
+                    openNotificationSourceRegistration(transaction);
+                }
+                else {
+                    openTransactionInspection(transaction);
+                }
             }
         });
+    }
+
+    private void openNotificationSourceRegistration(Transaction transaction) {
+        Intent intent = new Intent(context, NotificationSourceRegistrationActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("transaction", transaction);
+        intent.putExtras(bundle);
+        context.startActivity(intent);
     }
 
     private void openTransactionInspection(Transaction transaction) {

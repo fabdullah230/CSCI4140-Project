@@ -37,7 +37,10 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.w3c.dom.Text;
+
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -48,12 +51,13 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private static final String CHANNEL_ID = "sidebar_channel";
     private static final int NOTIFICATION_ID = 1;
-    private static TransactionAdapter adapter;
+    private TransactionAdapter adapter;
+    private RecyclerView transactionsRecyclerView;
     private static final String NOTIFICATION_LISTENER_PERMISSION = "android.permission.BIND_NOTIFICATION_LISTENER_SERVICE";
     private AppDatabase database;
     private TransactionDao transactionDao;
 
-    private Button button;
+    private TextView sumAmount;
 
     private AppCalibrateDatabase calibrateDatabase;
     private TransactionDao transactionCalibrateDao;
@@ -65,6 +69,16 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
+
+    public void setSumAmount(List<Transaction> transactions){
+        double sum = 0;
+        for (Transaction t : transactions){
+            sum += Double.parseDouble(t.getAmount());
+        }
+        sumAmount.setText("HK$ " + String.format("%.2f", sum));
+    }
+
+
 
     //this is to prevent opening notification page every time
     private boolean isNotificationListenerEnabled() {
@@ -127,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
     private class InsertTransactionTask extends AsyncTask<Transaction, Void, Void> {
         @Override
         protected Void doInBackground(Transaction... transactions) {
-            GlobalState state = GlobalState.getInstance();
+            GlobalState state = GlobalState.getInstance(MainActivity.this);
             if (state.getCalibrateMode()){
                 transactionCalibrateDao.insert(transactions[0]);
             }
@@ -142,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             // Update the transaction list
-            new LoadTransactionsTask().execute();
+            fetchTransactions();
         }
     }
 
@@ -151,7 +165,6 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         View refresh = findViewById(R.id.refreshButton);
         refreshData(refresh);
-        new LoadTransactionsTask().execute();
     }
 
     @Override
@@ -167,9 +180,14 @@ public class MainActivity extends AppCompatActivity {
         createNotificationChannel();
         requestNotificationListenerPermission();
         drawerLayout = findViewById(R.id.drawer_layout);
+        sumAmount = findViewById(R.id.sumAmount);
 
-        RecyclerView transactionsRecyclerView = findViewById(R.id.transactionsRecyclerView);
+
+        transactionsRecyclerView = findViewById(R.id.transactionsRecyclerView);
         transactionsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new TransactionAdapter(new ArrayList<>(), this);
+        transactionsRecyclerView.setAdapter(adapter);
+
 
         database = AppDatabase.getDatabase(this);
         transactionDao = database.transactionDao();
@@ -177,12 +195,12 @@ public class MainActivity extends AppCompatActivity {
         calibrateDatabase = AppCalibrateDatabase.getDatabase(this);
         transactionCalibrateDao = calibrateDatabase.transactionDao();
 
-        new LoadTransactionsTask().execute();
+        fetchTransactions();
     }
 
     public void refreshData(View view){
         System.out.println("Pressed refresh");
-        new LoadTransactionsTask().execute();
+        fetchTransactions();
     }
 
     public class LoadTransactionsTask extends AsyncTask<Void, Void, List<Transaction>> {
@@ -200,14 +218,42 @@ public class MainActivity extends AppCompatActivity {
                 transactionsRecyclerView.setAdapter(adapter);
             } else {
                 adapter.updateTransactions(transactions);
+                setSumAmount(transactions);
             }
         }
     }
+
+    private void fetchTransactions() {
+        //```java
+        // Placeholder for fetching data from an API
+        new Thread(() -> {
+            // Simulate network delay
+            List<Transaction> transactions = new ArrayList<>();
+            try {
+                transactions = transactionDao.getAllTransactions();
+            } catch (Exception e) {
+                System.out.println("Error fetching data.");
+            }
+
+            List<Transaction> finalTransactions = transactions;
+            runOnUiThread(() -> adapter.updateTransactions(finalTransactions));
+            runOnUiThread(() -> setSumAmount(finalTransactions));
+        }).start();
+    }
+
+
+
+
+
+
+
 
     public void openSidebar(View view) {
         drawerLayout.openDrawer(findViewById(R.id.navigation_view));
 //        sendNotification();
     }
+
+
 
     private static final int PERMISSION_REQUEST_CODE = 123;
 
@@ -248,7 +294,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openHistory(MenuItem item) {
-        startActivity(new Intent(this, TestActivity.class));
+        startActivity(new Intent(this, HistoryActivity.class));
     }
 
     public void openSettings(MenuItem item) {

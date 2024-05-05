@@ -39,6 +39,20 @@ public interface TransactionDao {
 
     @Query("SELECT * FROM transactions WHERE timestamp > :timestamp AND source = :source ORDER BY timestamp DESC")
     List<Transaction> getTransactionsAfterBySource(long timestamp, String source);
+    @Query("UPDATE transactions SET amount = :amount WHERE id = :transactionId")
+    void editAmountById(int transactionId, String amount);
+
+    @Query("UPDATE transactions SET title = :title WHERE id = :transactionId")
+    void editTitleById(int transactionId, String title);
+
+    @Query("UPDATE transactions SET comments = :comments WHERE id = :transactionId")
+    void editCommentById(int transactionId, String comments);
+
+    @Query("UPDATE transactions SET isShared = :isShared WHERE id = :transactionId")
+    void setIsShared(int transactionId, boolean isShared);
+
+    @Query("UPDATE transactions SET sharedAmount = :sharedAmount WHERE id = :transactionId")
+    void updateSharedAmount(int transactionId, String sharedAmount);
 
 
 }
