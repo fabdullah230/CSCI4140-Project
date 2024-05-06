@@ -147,16 +147,21 @@ public class TransactionInspectionActivity extends AppCompatActivity {
     }
 
     private void showEditCommentsDialog() {
+        // Reinitialize editCommentsEditText each time we need to show the dialog
+        editCommentsEditText = new EditText(this);
+        if (currentTransaction != null && currentTransaction.getComments() != null) {
+            editCommentsEditText.setText(currentTransaction.getComments());
+            editCommentsEditText.setSelection(currentTransaction.getComments().length());
+        }
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Edit Comments")
                 .setView(editCommentsEditText)
                 .setPositiveButton("Save", (dialog, which) -> {
                     String newComments = editCommentsEditText.getText().toString().trim();
                     commentsTextView.setText(newComments);
-
                     // Update comments in the currentTransaction object
                     if (currentTransaction != null) {
-//                        currentTransaction.setComments(newComments);
                         new Thread(() -> {
                             transactionDao.editCommentById(currentTransaction.getId(), newComments);
                         }).start();
@@ -164,17 +169,6 @@ public class TransactionInspectionActivity extends AppCompatActivity {
                 })
                 .setNegativeButton("Cancel", null)
                 .show();
-
-        // Set the original comment as the filled text in the edit text
-        if (currentTransaction != null) {
-            String originalComment = currentTransaction.getComments();
-            if (originalComment != null) {
-                editCommentsEditText.setText(originalComment);
-                editCommentsEditText.setSelection(originalComment.length());
-            } else {
-                editCommentsEditText.setText("");  // Ensure the field is empty if there is no comment
-            }
-        }
     }
 
     private void showDeleteConfirmationDialog() {
