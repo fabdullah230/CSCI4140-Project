@@ -43,7 +43,9 @@ public class NotificationSourceRegistrationActivity extends AppCompatActivity {
         if (bundle != null && bundle.containsKey("transaction")) {
             currentTransaction = bundle.getParcelable("transaction");
             titleLabel.setText(currentTransaction.getTitle());
-            sourceLabel.setText("Package name: " + currentTransaction.getSource());
+//            sourceLabel.setText("Package name: " + currentTransaction.getSource());
+            // @hk-company-work: Modify to fit latest UI
+            sourceLabel.setText(currentTransaction.getSource());
         }
     }
 
@@ -75,10 +77,7 @@ public class NotificationSourceRegistrationActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-
-
+    public void clickCloseButton(View view) {
+        finish();
+    }
 }

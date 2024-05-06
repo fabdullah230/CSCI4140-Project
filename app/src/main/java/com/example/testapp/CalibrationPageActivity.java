@@ -161,6 +161,7 @@ public class CalibrationPageActivity  extends AppCompatActivity {
     }
 
 
-
-
+    public void clickCloseButton(View view) {
+        finish();
+    }
 }
