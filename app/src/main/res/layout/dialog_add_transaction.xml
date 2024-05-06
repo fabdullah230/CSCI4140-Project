@@ -5,15 +5,17 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="24dp"
-    android:background="?android:attr/selectableItemBackground">
+    >
+
 
     <EditText
         android:id="@+id/editTextTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:hint="Title"
         android:padding="12dp"
-        android:background="?attr/colorSurface"
+        android:background="@drawable/edittext_border"
         android:textColor="?attr/colorOnSurface"
         android:textSize="16sp" />
 
@@ -27,7 +29,7 @@
         android:inputType="numberDecimal"
         android:layout_marginTop="18dp"
         android:padding="12dp"
-        android:background="?attr/colorSurface"
+        android:background="@drawable/edittext_border"
         android:textColor="?attr/colorOnSurface"
         android:textSize="16sp" />
 
@@ -40,7 +42,7 @@
         android:clickable="true"
         android:layout_marginTop="18dp"
         android:padding="12dp"
-        android:background="?attr/colorSurface"
+        android:background="@drawable/edittext_border"
         android:textColor="?attr/colorOnSurface"
         android:textSize="16sp"
         android:hint="Select transaction date/time" />
@@ -65,7 +67,7 @@
         android:layout_marginTop="18dp"
         android:hint="Source"
         android:padding="12dp"
-        android:background="?attr/colorSurface"
+        android:background="@drawable/edittext_border"
         android:textColor="?attr/colorOnSurface"
         android:textSize="16sp" />
 
