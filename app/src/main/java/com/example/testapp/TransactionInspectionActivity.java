@@ -60,8 +60,10 @@ public class TransactionInspectionActivity extends AppCompatActivity {
             System.out.println("Received by inspection activity" + currentTransaction);
             if (currentTransaction != null) {
                 titleTextView.setText(currentTransaction.getTitle());
-                sourceTextView.setText(/*"Source: " +*/ currentTransaction.getSource());
-                amountTextView.setText(/*"Amount: HK$" +*/ "HK$ " + currentTransaction.getAmount());
+//                sourceTextView.setText("Source: " + currentTransaction.getSource());
+//                amountTextView.setText("Amount: HK$" + currentTransaction.getAmount());
+                sourceTextView.setText(currentTransaction.getSource());
+                amountTextView.setText("HK$ " + currentTransaction.getAmount());
                 SimpleDateFormat sdf = new SimpleDateFormat("EEE dd MMM yyyy h:mm a", Locale.getDefault());
                 timestampTextView.setText("Created at " + sdf.format(currentTransaction.getTimestamp()));
                 commentsTextView.setText(currentTransaction.getComments());
@@ -70,7 +72,8 @@ public class TransactionInspectionActivity extends AppCompatActivity {
                     sharedAmountEditText.setText(currentTransaction.getSharedAmount());
                     sharedAmountEditText.setVisibility(View.VISIBLE);
                     sharedAmountLabel.setVisibility(View.VISIBLE);
-                    personalAmount.setText(/*"Personal amount: HK$" +*/ "HK$ " + currentTransaction.getPersonalAmount());
+//                    personalAmount.setText("Personal amount: HK$" + currentTransaction.getPersonalAmount());
+                    personalAmount.setText("HK$ " + currentTransaction.getPersonalAmount());
                     personalAmount.setVisibility(View.VISIBLE);
                 }
             }
@@ -125,7 +128,8 @@ public class TransactionInspectionActivity extends AppCompatActivity {
                                 currentTransaction.setPersonalAmount(String.valueOf(updatedAmount));
 
                                 // @hk-company-work: Updated for latest UI
-                                personalAmount.setText(/*"Personal amount: HK$" +*/ "HK$ " + currentTransaction.getPersonalAmount());
+//                                personalAmount.setText("Personal amount: HK$" + currentTransaction.getPersonalAmount());
+                                personalAmount.setText("HK$ " + currentTransaction.getPersonalAmount());
                                 personalAmount.setVisibility(View.VISIBLE);
                             });
                         }).start();
