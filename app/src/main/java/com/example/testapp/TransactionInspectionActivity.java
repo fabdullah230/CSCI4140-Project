@@ -44,6 +44,7 @@ public class TransactionInspectionActivity extends AppCompatActivity {
         TextView timestampTextView = findViewById(R.id.timestampTextView);
         Switch sharedSwitch = findViewById(R.id.sharedSwitch);
         EditText sharedAmountEditText = findViewById(R.id.sharedAmountEditText);
+        TextView sharedAmountLabel = findViewById(R.id.sharedAmountLabel);  // @hk-company-work: Added for latest UI
         commentsTextView = findViewById(R.id.commentsTextView);
         editCommentsButton = findViewById(R.id.editCommentsButton);
         editCommentsEditText = new EditText(this);
@@ -52,22 +53,24 @@ public class TransactionInspectionActivity extends AppCompatActivity {
 
         Button deleteButton = findViewById(R.id.deleteButton);
 
+        // @hk-company-work: Updated for latest UI
         Bundle bundle = getIntent().getExtras();
         if (bundle != null && bundle.containsKey("transaction")) {
             currentTransaction = bundle.getParcelable("transaction");
             System.out.println("Received by inspection activity" + currentTransaction);
             if (currentTransaction != null) {
                 titleTextView.setText(currentTransaction.getTitle());
-                sourceTextView.setText("Source: " + currentTransaction.getSource());
-                amountTextView.setText("Amount: HK$" + currentTransaction.getAmount());
+                sourceTextView.setText(/*"Source: " +*/ currentTransaction.getSource());
+                amountTextView.setText(/*"Amount: HK$" +*/ "HK$ " + currentTransaction.getAmount());
                 SimpleDateFormat sdf = new SimpleDateFormat("EEE dd MMM yyyy h:mm a", Locale.getDefault());
-                timestampTextView.setText("Created at: " + sdf.format(currentTransaction.getTimestamp()));
+                timestampTextView.setText("Created at " + sdf.format(currentTransaction.getTimestamp()));
                 commentsTextView.setText(currentTransaction.getComments());
                 sharedSwitch.setChecked(currentTransaction.isShared());
                 if(currentTransaction.isShared()){
                     sharedAmountEditText.setText(currentTransaction.getSharedAmount());
                     sharedAmountEditText.setVisibility(View.VISIBLE);
-                    personalAmount.setText("Personal amount: HK$" + currentTransaction.getPersonalAmount());
+                    sharedAmountLabel.setVisibility(View.VISIBLE);
+                    personalAmount.setText(/*"Personal amount: HK$" +*/ "HK$ " + currentTransaction.getPersonalAmount());
                     personalAmount.setVisibility(View.VISIBLE);
                 }
             }
@@ -76,8 +79,10 @@ public class TransactionInspectionActivity extends AppCompatActivity {
         sharedSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 sharedAmountEditText.setVisibility(View.VISIBLE);
+                sharedAmountLabel.setVisibility(View.VISIBLE);
             } else {
                 sharedAmountEditText.setVisibility(View.GONE);
+                sharedAmountLabel.setVisibility(View.GONE);
             }
         });
 
@@ -119,7 +124,8 @@ public class TransactionInspectionActivity extends AppCompatActivity {
                                 currentTransaction.setSharedAmount(finalSharedAmountStr);
                                 currentTransaction.setPersonalAmount(String.valueOf(updatedAmount));
 
-                                personalAmount.setText("Personal amount: HK$" + currentTransaction.getPersonalAmount());
+                                // @hk-company-work: Updated for latest UI
+                                personalAmount.setText(/*"Personal amount: HK$" +*/ "HK$ " + currentTransaction.getPersonalAmount());
                                 personalAmount.setVisibility(View.VISIBLE);
                             });
                         }).start();
@@ -181,5 +187,9 @@ public class TransactionInspectionActivity extends AppCompatActivity {
                 })
                 .setNegativeButton("Cancel", null)
                 .show();
+    }
+
+    public void clickCloseButton(View view) {
+        finish();
     }
 }

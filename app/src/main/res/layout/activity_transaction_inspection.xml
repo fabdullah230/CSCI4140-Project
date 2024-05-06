@@ -4,137 +4,317 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="?attr/colorSurface"
     tools:context=".TransactionInspectionActivity">
+
+    <LinearLayout
+        android:id="@+id/titleLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/closeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="✖"
+        android:layout_marginBottom="20dp"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:textColor="?attr/colorOnSurface"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center"
+        android:onClick="clickCloseButton"/>
 
     <TextView
         android:id="@+id/detailsTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Details:"
+        android:text="Details"
         android:layout_marginBottom="20dp"
         android:textStyle="bold"
         android:textSize="24sp"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorOnSurface"
+        android:layout_toEndOf="@+id/crossButton"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center"/>
 
-    <TextView
-        android:id="@+id/titleTextView"
-        android:layout_below="@id/detailsTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/sourceTextView"
-        android:layout_width="wrap_content"
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/titleDivider"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/titleTextView"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:textSize="20sp"
-        android:textColor="@color/colorPrimaryDark" />
+        android:layout_below="@id/titleLayout"
+        android:background="?attr/colorOnSurface" />
 
-    <TextView
-        android:id="@+id/amountTextView"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/sourceTextView"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:textSize="20sp"
-        android:textColor="@color/black" />
-    <TextView
-        android:id="@+id/personalAmountTextView"
-        android:layout_width="wrap_content"
+        android:layout_below="@id/titleLayout"
+        android:orientation="vertical"
+        android:divider="?android:attr/dividerHorizontal"
+        android:showDividers="middle"
+        android:dividerPadding="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/amountTextView"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:textSize="20sp"
-        android:textColor="@color/black" />
+        android:orientation="horizontal"
+        android:paddingVertical="5dp" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_weight="1"
+            android:gravity="start|center"
+            android:text="Title"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="4dp"
+            android:layout_weight="1"
+            android:gravity="end|center"
+            android:text="(Not Avilable)"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingVertical="5dp" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_gravity="start|center"
+            android:gravity="start|center"
+            android:text="Source"
+            android:textSize="16sp"
+            android:textColor="?attr/colorOnSurface" />
+
+        <TextView
+            android:id="@+id/sourceTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="4dp"
+            android:layout_weight="1"
+            android:gravity="end|center"
+            android:text="(Not Avilable)"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingVertical="5dp" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_weight="1"
+            android:gravity="start|center"
+            android:text="Amount"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/amountTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="4dp"
+            android:layout_weight="1"
+            android:gravity="end|center"
+            android:text="(Not Avilable)"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingVertical="5dp" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_weight="1"
+            android:gravity="start|center"
+            android:text="Personal Amount"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/personalAmountTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="4dp"
+            android:layout_weight="1"
+            android:gravity="end|center"
+            android:text="(Not Avilable)"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/timestampTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/personalAmountTextView"
         android:layout_marginStart="16dp"
         android:layout_marginTop="28dp"
+        android:text="Timestamp Content"
         android:textSize="16sp"
         android:textStyle="italic"
         android:textColor="@color/gray" />
+
+    </LinearLayout>
 
     <Switch
         android:id="@+id/sharedSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/timestampTextView"
+        android:layout_below="@id/linearLayout"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="Shared Expense"
-        android:textColor="@color/black" />
+        android:textColor="?attr/colorOnSurface" />
+
+    <TextView
+        android:id="@+id/sharedAmountLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sharedSwitch"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="HK$ "
+        android:textSize="18sp"
+        android:textColor="?attr/colorOnSurface"
+        android:layout_alignTop="@id/sharedAmountEditText"
+        android:layout_alignBottom="@id/sharedAmountEditText"
+        android:paddingBottom="6dp"
+        android:gravity="center"
+        android:visibility="gone" />
 
     <EditText
         android:id="@+id/sharedAmountEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/sharedSwitch"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="2dp"
         android:layout_marginTop="8dp"
+        android:layout_toEndOf="@id/sharedAmountLabel"
         android:inputType="numberDecimal"
         android:hint="Shared Amount"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorOnSurface"
         android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/commentsTitle"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/commentsLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/sharedAmountEditText"
-        android:text="Comments:"
-        android:layout_marginTop="24dp"
-        android:layout_marginStart="16dp"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:textColor="@color/black" />
+        android:layout_below="@id/sharedAmountEditText">
+
+        <TextView
+            android:id="@+id/commentsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:paddingStart="16dp"
+            android:text="Comments"
+            android:textColor="?attr/colorOnSurface"
+            android:gravity="start|center"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/editCommentsButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:layout_toEndOf="@+id/commentsTitle"
+            android:background="@null"
+            android:contentDescription="Edit Comments"
+            android:gravity="start|center"
+            android:src="@drawable/ic_edit" />
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/commentsTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/commentsTitle"
+        android:layout_below="@id/commentsLayout"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorOnSurface"
         android:textSize="16sp" />
 
-    <ImageButton
-        android:id="@+id/editCommentsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/commentsTextView"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/ic_edit"
-        android:background="@null"
-        android:contentDescription="Edit Comments" />
 
     <Button
         android:id="@+id/deleteButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editCommentsButton"
+        android:layout_below="@id/commentsLayout"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
         android:layout_marginVertical="46dp"
         android:text="Delete"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/black" />
+        android:layout_centerHorizontal="true"
+        android:textColor="?attr/colorSurface"
+        android:backgroundTint="?attr/colorError" />
 
 </RelativeLayout>

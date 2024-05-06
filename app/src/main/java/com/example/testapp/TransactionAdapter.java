@@ -45,7 +45,8 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         Transaction transaction = transactions.get(position);
         holder.titleTextView.setText(transaction.getTitle());
         holder.sourceTextView.setText(transaction.getSource());
-        holder.amountTextView.setText(transaction.getAmount());
+//        holder.amountTextView.setText(transaction.getAmount());
+        holder.amountTextView.setText("HK$ " + transaction.getAmount()); // @hk-company-work: Updated for latest UI
 
         SimpleDateFormat sdf = new SimpleDateFormat("EEE dd MMM yyyy h:mm a", Locale.getDefault());
         holder.timestampTextView.setText(sdf.format(transaction.getTimestamp()));
