@@ -51,7 +51,9 @@ public class HistoryActivity extends AppCompatActivity {
         for (Transaction t : transactions){
             sum += Double.parseDouble(t.getAmount());
         }
-        sumAmount.setText("Total amount: HK$ " + String.format("%.2f", sum));
+//        sumAmount.setText("Total amount: HK$ " + String.format("%.2f", sum));
+        // @hk-company-work: Adjust for latest UI
+        sumAmount.setText("HK$ " + String.format("%.2f", sum));
     }
 
     public void setSumPersonalAmount(List<Transaction> transactions){
@@ -59,7 +61,9 @@ public class HistoryActivity extends AppCompatActivity {
         for (Transaction t : transactions){
             sum += Double.parseDouble(t.getPersonalAmount());
         }
-        sumPersonalAmount.setText("Personal: HK$ " + String.format("%.2f", sum));
+//        sumPersonalAmount.setText("Personal: HK$ " + String.format("%.2f", sum));
+        // @hk-company-work: Adjust for latest UI
+        sumPersonalAmount.setText("HK$ " + String.format("%.2f", sum));
     }
 
 
@@ -239,10 +243,7 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-
-
+    public void clickCloseButton(View view) {
+        finish();
+    }
 }
