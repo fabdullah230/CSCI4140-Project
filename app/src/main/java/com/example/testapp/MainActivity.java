@@ -27,6 +27,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -252,8 +253,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void openSidebar(View view) {
-        drawerLayout.openDrawer(findViewById(R.id.navigation_view));
+//        drawerLayout.openDrawer(findViewById(R.id.navigation_view));
+        // @hk-company-work: Changed to Pop-up menu for latest UI
 //        sendNotification();
+
+        PopupMenu menu = new PopupMenu(this, view);
+        menu.getMenuInflater().inflate(R.menu.nav_menu, menu.getMenu());
+        menu.show();
     }
 
 
