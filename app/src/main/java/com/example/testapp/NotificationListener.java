@@ -92,21 +92,22 @@ public class NotificationListener extends NotificationListenerService {
         String title = sbn.getNotification().extras.getString(Notification.EXTRA_TITLE);
         String text = sbn.getNotification().extras.getString(Notification.EXTRA_TEXT);
         String packageName = sbn.getPackageName();
+
         long timestamp = sbn.getPostTime();
 
         System.out.println(sbn);
 
         if(state.getCalibrateMode()){
-            return new Transaction(title, packageName, "0.0", timestamp);
+            return new Transaction(title, text,packageName, "0.0", timestamp);
 
         } else {
             for (NotificationSource n : registeredSources){
                 System.out.println("current: " + n.getPackageName() + ", matching: " + packageName);
-                if (packageName.equals(n.getPackageName())){
+                if (packageName.equals(n.getPackageName()) && text.contains(n.getShouldContain())){
 
                     String transactionSource = n.getName();
                     String transactionAmount = String.valueOf(parseFirstNumber(text));
-                    return new Transaction(title, transactionSource, transactionAmount, timestamp);
+                    return new Transaction(title, text, transactionSource, transactionAmount, timestamp);
 
                 }
             }

@@ -16,6 +16,7 @@ public class Transaction implements Parcelable{
     @NonNull
     private int id;
     private String title;
+    private String text;
     private String source;
     private String amount;
     private long timestamp;
@@ -25,6 +26,14 @@ public class Transaction implements Parcelable{
     private String sharedAmount;
     private String personalAmount;
     private String comments;
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
 
     public String getPersonalAmount() {
         return personalAmount;
@@ -111,8 +120,9 @@ public class Transaction implements Parcelable{
                 '}';
     }
 
-    public Transaction(String title, String source, String amount, long timestamp) {
+    public Transaction(String title, String text, String source, String amount, long timestamp) {
         this.title = title;
+        this.text = text;
         this.source = source;
         this.amount = amount;
         this.timestamp = timestamp;
@@ -127,6 +137,7 @@ public class Transaction implements Parcelable{
     protected Transaction(Parcel in) {
         id = in.readInt();
         title = in.readString();
+        text = in.readString();
         source = in.readString();
         amount = in.readString();
         timestamp = in.readLong();
@@ -141,6 +152,7 @@ public class Transaction implements Parcelable{
         dest.writeInt(id);
         dest.writeString(title);
         dest.writeString(source);
+        dest.writeString(text);
         dest.writeString(amount);
         dest.writeLong(timestamp);
         dest.writeBoolean(isShared);

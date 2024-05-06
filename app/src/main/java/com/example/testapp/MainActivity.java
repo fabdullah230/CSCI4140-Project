@@ -364,7 +364,7 @@ public class MainActivity extends AppCompatActivity {
                 String transactionAmount = amount.getText().toString();
                 long transactionTimestamp = calendar.getTimeInMillis(); // Unix timestamp in milliseconds
 
-                Transaction transaction = new Transaction(transactionTitle, transactionSource, transactionAmount, transactionTimestamp);
+                Transaction transaction = new Transaction(transactionTitle,"", transactionSource, transactionAmount, transactionTimestamp);
                 addTransaction(transaction);
             }
 

@@ -30,6 +30,7 @@ public class TransactionInspectionActivity extends AppCompatActivity {
     private ImageButton editCommentsButton;
     private EditText editCommentsEditText;
     private TextView personalAmount;
+    private TextView body;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,7 @@ public class TransactionInspectionActivity extends AppCompatActivity {
         commentsTextView = findViewById(R.id.commentsTextView);
         editCommentsButton = findViewById(R.id.editCommentsButton);
         editCommentsEditText = new EditText(this);
+        body = findViewById(R.id.bodyTextView);
 
         personalAmount = findViewById(R.id.personalAmountTextView);
 
@@ -67,6 +69,7 @@ public class TransactionInspectionActivity extends AppCompatActivity {
                 SimpleDateFormat sdf = new SimpleDateFormat("EEE dd MMM yyyy h:mm a", Locale.getDefault());
                 timestampTextView.setText("Created at " + sdf.format(currentTransaction.getTimestamp()));
                 commentsTextView.setText(currentTransaction.getComments());
+                body.setText(currentTransaction.getText());
                 sharedSwitch.setChecked(currentTransaction.isShared());
                 if(currentTransaction.isShared()){
                     sharedAmountEditText.setText(currentTransaction.getSharedAmount());
