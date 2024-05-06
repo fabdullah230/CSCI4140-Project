@@ -280,6 +280,7 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, PERMISSION_REQUEST_CODE);
         } else {
             // Permission is already granted, send the notification
+            System.out.println("sending notification");
             notificationManager.notify(NOTIFICATION_ID, builder.build());
         }
     }
@@ -311,6 +312,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openAddTransactionDialog(View view) {
+        sendNotification();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_add_transaction, null);
         builder.setView(dialogView);
@@ -364,7 +366,7 @@ public class MainActivity extends AppCompatActivity {
                 String transactionAmount = amount.getText().toString();
                 long transactionTimestamp = calendar.getTimeInMillis(); // Unix timestamp in milliseconds
 
-                Transaction transaction = new Transaction(transactionTitle,"", transactionSource, transactionAmount, transactionTimestamp);
+                Transaction transaction = new Transaction(transactionTitle, transactionSource, transactionAmount, transactionTimestamp);
                 addTransaction(transaction);
             }
 

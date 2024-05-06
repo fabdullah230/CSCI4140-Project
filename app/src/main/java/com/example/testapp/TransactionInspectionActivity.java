@@ -69,7 +69,6 @@ public class TransactionInspectionActivity extends AppCompatActivity {
                 SimpleDateFormat sdf = new SimpleDateFormat("EEE dd MMM yyyy h:mm a", Locale.getDefault());
                 timestampTextView.setText("Created at " + sdf.format(currentTransaction.getTimestamp()));
                 commentsTextView.setText(currentTransaction.getComments());
-                body.setText(currentTransaction.getText());
                 sharedSwitch.setChecked(currentTransaction.isShared());
                 if(currentTransaction.isShared()){
                     sharedAmountEditText.setText(currentTransaction.getSharedAmount());

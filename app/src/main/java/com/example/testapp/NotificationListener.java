@@ -98,7 +98,7 @@ public class NotificationListener extends NotificationListenerService {
         System.out.println(sbn);
 
         if(state.getCalibrateMode()){
-            return new Transaction(title, text,packageName, "0.0", timestamp);
+            return new Transaction(title,  packageName, "0.0", timestamp);
 
         } else {
             for (NotificationSource n : registeredSources){
@@ -107,7 +107,7 @@ public class NotificationListener extends NotificationListenerService {
 
                     String transactionSource = n.getName();
                     String transactionAmount = String.valueOf(parseFirstNumber(text));
-                    return new Transaction(title, text, transactionSource, transactionAmount, timestamp);
+                    return new Transaction(title,  transactionSource, transactionAmount, timestamp);
 
                 }
             }
