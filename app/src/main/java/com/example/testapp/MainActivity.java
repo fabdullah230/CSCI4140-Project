@@ -164,7 +164,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        View refresh = findViewById(R.id.refreshButton);
+//        View refresh = findViewById(R.id.refreshButton);
+        View refresh = null; // @hk-company-work: R.id.refreshButton is removed from the UI...
         refreshData(refresh);
     }
 
