@@ -16,6 +16,7 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -368,10 +369,21 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
 
+
+        // @hk-company-work: Change Yes/Cancel color for latest UI
+        TypedValue typedValue = new TypedValue();
+        this.getTheme().resolveAttribute(com.google.android.material.R.attr.colorPrimary, typedValue, true);
+        int backgroundColor = typedValue.data;
+        this.getTheme().resolveAttribute(com.google.android.material.R.attr.colorOnPrimary, typedValue, true);
+        int foregroundColor = typedValue.data;
+
+
         // Style the buttons
         Button positiveButton = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
-        positiveButton.setTextColor(getResources().getColor(android.R.color.white));
-        positiveButton.setBackgroundColor(getResources().getColor(android.R.color.black));
+//        positiveButton.setTextColor(getResources().getColor(android.R.color.white));
+//        positiveButton.setBackgroundColor(getResources().getColor(android.R.color.black));
+        positiveButton.setTextColor(foregroundColor);
+        positiveButton.setBackgroundColor(backgroundColor);
         positiveButton.setTextSize(16);
         positiveButton.setAllCaps(false);
         positiveButton.setTypeface(null, Typeface.BOLD);

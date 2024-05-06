@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="24dp"
-    android:background="@color/white">
+    android:background="?android:attr/selectableItemBackground">
 
     <EditText
         android:id="@+id/editTextTitle"
@@ -13,8 +13,8 @@
         android:layout_height="wrap_content"
         android:hint="Title"
         android:padding="12dp"
-        android:background="@drawable/edit_text_background"
-        android:textColor="@color/black"
+        android:background="?attr/colorSurface"
+        android:textColor="?attr/colorOnSurface"
         android:textSize="16sp" />
 
 
@@ -27,8 +27,8 @@
         android:inputType="numberDecimal"
         android:layout_marginTop="18dp"
         android:padding="12dp"
-        android:background="@drawable/edit_text_background"
-        android:textColor="@color/black"
+        android:background="?attr/colorSurface"
+        android:textColor="?attr/colorOnSurface"
         android:textSize="16sp" />
 
     <TextView
@@ -40,8 +40,8 @@
         android:clickable="true"
         android:layout_marginTop="18dp"
         android:padding="12dp"
-        android:background="@drawable/edit_text_background"
-        android:textColor="@color/black"
+        android:background="?attr/colorSurface"
+        android:textColor="?attr/colorOnSurface"
         android:textSize="16sp"
         android:hint="Select transaction date/time" />
 
@@ -65,8 +65,8 @@
         android:layout_marginTop="18dp"
         android:hint="Source"
         android:padding="12dp"
-        android:background="@drawable/edit_text_background"
-        android:textColor="@color/black"
+        android:background="?attr/colorSurface"
+        android:textColor="?attr/colorOnSurface"
         android:textSize="16sp" />
 
 
