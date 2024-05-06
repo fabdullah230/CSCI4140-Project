@@ -230,6 +230,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="Shared Expense"
+        android:textSize="20dp"
         android:textColor="?attr/colorOnSurface" />
 
     <TextView
@@ -242,7 +243,6 @@
         android:text="HK$ "
         android:textSize="18sp"
         android:textColor="?attr/colorOnSurface"
-        android:layout_alignTop="@id/sharedAmountEditText"
         android:layout_alignBottom="@id/sharedAmountEditText"
         android:paddingBottom="6dp"
         android:gravity="center"
@@ -255,6 +255,7 @@
         android:layout_below="@id/sharedSwitch"
         android:layout_marginStart="2dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/edittext_border"
         android:layout_toEndOf="@id/sharedAmountLabel"
         android:inputType="numberDecimal"
         android:hint="Shared Amount"

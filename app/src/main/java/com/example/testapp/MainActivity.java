@@ -336,7 +336,7 @@ public class MainActivity extends AppCompatActivity {
                     calendar.set(Calendar.MILLISECOND, 0);
 
                     // Formatting the calendar time to the TextView
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                    SimpleDateFormat sdf = new SimpleDateFormat("EEE dd MMM yyyy h:mm a", Locale.getDefault());
                     time.setText(sdf.format(calendar.getTime()));  // Show formatted date-time string in TextView
 
                 }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
@@ -350,7 +350,7 @@ public class MainActivity extends AppCompatActivity {
 
         EditText source = dialogView.findViewById(R.id.editTextSource);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE dd MMM yyyy h:mm a", Locale.getDefault());
         String currentTime = sdf.format(new Date());
         time.setText(currentTime);
 
